@@ -76,7 +76,7 @@ export default class App extends Component {
   };
 
   handleLoadMore = () => {
-    this.setState(prev => ({ page: prev.page + 1, isScroll: true }));
+    this.setState(prev => ({ page: prev.page + 1 }));
   };
 
   handleShowLargeImg = largeImage => {
