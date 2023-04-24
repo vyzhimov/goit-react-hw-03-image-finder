@@ -1,10 +1,9 @@
 import errorImage from './Image_not_available.png';
 
-export default function FindError({ message }) {
+export default function FindError() {
   return (
-    <div>
+    <div className="FindError">
       <img src={errorImage} alt="results not found" />
-      <p>{message}</p>
     </div>
   );
 }

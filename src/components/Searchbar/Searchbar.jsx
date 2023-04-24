@@ -1,5 +1,7 @@
 import { Component } from 'react';
 import { toast } from 'react-toastify';
+import { FcSearch } from 'react-icons/fc';
+import PropTypes from 'prop-types';
 
 export default class Searchbar extends Component {
   state = {
@@ -27,14 +29,16 @@ export default class Searchbar extends Component {
     const { hadleSubmit, handleValueChange } = this;
 
     return (
-      <header className="searchbar">
-        <form className="form" onSubmit={hadleSubmit}>
-          <button type="submit" className="button">
-            <span className="button-label">Search</span>
+      <header className="Searchbar">
+        <form className="SearchForm" onSubmit={hadleSubmit}>
+          <button type="submit" className="SearchForm-button">
+            <span className="button-label">
+              <FcSearch style={{ fontSize: '20px' }} />
+            </span>
           </button>
 
           <input
-            className="input"
+            className="SearchForm-input"
             type="text"
             autoComplete="off"
             autoFocus
@@ -47,3 +51,7 @@ export default class Searchbar extends Component {
     );
   }
 }
+
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
