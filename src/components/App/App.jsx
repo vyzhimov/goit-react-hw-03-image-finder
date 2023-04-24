@@ -43,7 +43,7 @@ export default class App extends Component {
             status: 'resolved',
             isShowBtn: this.state.page !== totalPage,
             isLoading: false,
-            showModal: false,
+            isShowModal: false,
           }));
 
           if (this.state.isScroll) {
@@ -69,7 +69,7 @@ export default class App extends Component {
   };
 
   handleShowLargeImg = largeImage => {
-    this.setState({ largeImage, showModal: true });
+    this.setState({ largeImage, isShowModal: true });
   };
 
   togleModal = () => {
@@ -85,7 +85,7 @@ export default class App extends Component {
       error,
       isLoading,
       isShowBtn,
-      showModal,
+      isShowModal,
       largeImage,
     } = this.state;
     return (
@@ -99,7 +99,9 @@ export default class App extends Component {
           showModal={handleShowLargeImg}
         />
         {isShowBtn && <Button load={handleLoadMore} />}
-        {showModal && <Modal togleModal={togleModal} largeImage={largeImage} />}
+        {isShowModal && (
+          <Modal togleModal={togleModal} largeImage={largeImage} />
+        )}
         <ToastContainer autoClose={2000} />
       </div>
     );
