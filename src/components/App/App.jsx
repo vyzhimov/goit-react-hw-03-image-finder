@@ -7,7 +7,7 @@ import Searchbar from 'components/Searchbar';
 import ImageGallery from 'components/ImageGallery';
 import { PixabayPlug } from 'components/PixabayPlug/PixabayPlug';
 import FindError from 'components/FindError/FindError';
-import { ThreeCircles } from 'react-loader-spinner';
+import { IsLoading } from 'components/IsLoading/IsLoading';
 import { fetchPhotos } from 'services/pixabay-api';
 import { Button } from 'components/Button/Button';
 import Modal from 'components/Modal/Modal';
@@ -22,7 +22,6 @@ export default class App extends Component {
     isLoading: false,
     isShowBtn: false,
     isShowModal: false,
-    isScroll: false,
     largeImage: null,
   };
 
@@ -37,7 +36,7 @@ export default class App extends Component {
       try {
         const nextPhotos = await fetchPhotos(nextQuery, nextPage);
         if (nextPhotos.hits.length === 0) {
-          this.setState({ status: 'rejected', isLoading: false });
+          this.setState({ status: 'rejected' });
         } else {
           const totalPage = Math.ceil(nextPhotos.totalHits / 12);
 
@@ -45,20 +44,20 @@ export default class App extends Component {
             photoList: [...prev.photoList, ...nextPhotos.hits],
             status: 'resolved',
             isShowBtn: this.state.page !== totalPage,
-            isLoading: false,
             isShowModal: false,
           }));
 
-          if (this.state.isScroll) {
+          if (nextPage !== 1) {
             this.handleScrollToBottom();
           }
         }
       } catch (error) {
         this.setState({
           error: `Sorry, search error. Try reloading the page! `,
-          isLoading: false,
           status: '',
         });
+      } finally {
+        this.setState({ isLoading: false });
       }
     }
   }
@@ -73,7 +72,6 @@ export default class App extends Component {
       photoList: [],
       page: 1,
       isShowBtn: false,
-      isScroll: false,
     });
   };
 
@@ -110,20 +108,7 @@ export default class App extends Component {
           <ImageGallery photos={photoList} showModal={handleShowLargeImg} />
         )}
         {error && <h1 style={{ margin: '0 auto' }}>{error}</h1>}
-        {isLoading && (
-          <ThreeCircles
-            height="100"
-            width="100"
-            color="#4fa94d"
-            wrapperStyle={{}}
-            wrapperClass="LoadingStatus"
-            visible={true}
-            ariaLabel="three-circles-rotating"
-            outerCircleColor="#02315c"
-            innerCircleColor="#0a82a3"
-            middleCircleColor="#02315c"
-          />
-        )}
+        {isLoading && <IsLoading />}
         {isShowBtn && <Button load={handleLoadMore} />}
         {isShowModal && (
           <Modal togleModal={togleModal} largeImage={largeImage} />
