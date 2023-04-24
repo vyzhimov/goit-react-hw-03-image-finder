@@ -104,9 +104,7 @@ export default class App extends Component {
         <Searchbar onSubmit={handleFormSubmit} />
         {status === 'idle' && <PixabayPlug />}
         {status === 'rejected' && <FindError />}
-        {status === 'resolved' && (
-          <ImageGallery photos={photoList} showModal={handleShowLargeImg} />
-        )}
+        <ImageGallery photos={photoList} showModal={handleShowLargeImg} />
         {error && <h1 style={{ margin: '0 auto' }}>{error}</h1>}
         {isLoading && <IsLoading />}
         {isShowBtn && <Button load={handleLoadMore} />}
